@@ -1,7 +1,15 @@
 {
-    "name": "modules/los-reg",
+    "name": "vfjodorovs12/los-reg",
     "description": "Модуль для отображения пользователей без регистрации",
     "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+          
+            "email": "vfjodorovs12@gmail.com",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": "^7.4 || ^8.0",
         "guzzlehttp/guzzle": "^7.0"
@@ -17,5 +25,17 @@
                 "Modules\\LosReg\\ServiceProvider"
             ]
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/vfjodorovs12/los-reg"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/vfjodorovs12/los-reg/issues",
+        "source": "https://github.com/vfjodorovs12/los-reg"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
