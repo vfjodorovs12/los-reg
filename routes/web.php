@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Vfjodorovs12\LosReg\LosRegController;
 
-Route::group(['middleware' => ['web', 'auth']], function () {
-    Route::get('/losreg/unregistered', [LosRegController::class, 'showUnregistered'])->name('losreg.unregistered');
+Route::group(['namespace' => 'Vfjodorovs12\LosReg\Http\Controllers', 'middleware' => ['web', 'auth']], function () {
+    Route::get('/los-reg', 'LosRegController@index')->name('los-reg.index');
 });
