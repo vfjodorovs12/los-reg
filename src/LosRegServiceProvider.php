@@ -12,9 +12,14 @@ class LosRegServiceProvider extends AbstractSeatPlugin
         $this->add_views();
     }
 
+    public function register()
+    {
+        //
+    }
+
     private function add_routes()
     {
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php'); // или '/Http/routes.php' если твои в Http
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 
     private function add_views()
@@ -22,8 +27,24 @@ class LosRegServiceProvider extends AbstractSeatPlugin
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'losreg');
     }
 
-    public function register()
+    // ОБЯЗАТЕЛЬНО реализуй эти методы!
+    public function getName(): string
     {
-        // если нужны биндинги/мердж конфига — сюда
+        return 'los-reg';
+    }
+
+    public function getPackageRepositoryUrl(): string
+    {
+        return 'https://github.com/vfjodorovs12/los-reg';
+    }
+
+    public function getPackagistPackageName(): string
+    {
+        return 'vfjodorovs12/los-reg';
+    }
+
+    public function getVersion(): string
+    {
+        return '1.0.0'; // или свою версию
     }
 }
