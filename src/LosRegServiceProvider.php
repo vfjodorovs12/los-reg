@@ -18,7 +18,12 @@ class LosRegServiceProvider extends AbstractSeatPlugin
 
     public function getPackagistPackageName(): string
     {
-        return 'vfjodorovs12/los-reg';
+        return 'los-reg';
+    }
+
+    public function getPackagistVendorName(): string
+    {
+        return 'vfjodorovs12';
     }
 
     public function getMenu(): array
