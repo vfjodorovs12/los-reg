@@ -2,13 +2,45 @@
 
 namespace Vfjodorovs12\LosReg;
 
-use Illuminate\Routing\Controller;
+use Seat\Services\AbstractSeatPlugin;
 
-class LosRegController extends Controller
+class LosRegServiceProvider extends AbstractSeatPlugin
 {
-    public function showUnregistered()
+    public function boot()
     {
-        // Возвращает вьюшку resources/views/unregistered.blade.php
-        return view('losreg::unregistered');
+        $this->add_routes();
+        $this->add_views();
+    }
+
+    public function register() {}
+
+    private function add_routes()
+    {
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+    }
+
+    private function add_views()
+    {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'losreg');
+    }
+
+    public function getName(): string
+    {
+        return 'los-reg';
+    }
+
+    public function getPackagistVendorName(): string
+    {
+        return 'vfjodorovs12';
+    }
+
+    public function getPackagistPackageName(): string
+    {
+        return 'vfjodorovs12/los-reg';
+    }
+
+    public function getPackageRepositoryUrl(): string
+    {
+        return 'https://github.com/vfjodorovs12/los-reg';
     }
 }
