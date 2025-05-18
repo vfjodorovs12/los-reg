@@ -1,21 +1,21 @@
 {
-  "name": "vfjodorovs12/los-reg",
-  "type": "seat-plugin",
-  "autoload": {
-    "psr-4": {
-      "Vfjodorovs12\\LosReg\\": "src/"
+    "name": "vfjodorovs12/los-reg",
+    "description": "Лос Рег модуль для SeAT",
+    "type": "library",
+    "require": {
+        "php": "^8.0",
+        "laravel/framework": "^10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vfjodorovs12\\LosReg\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vfjodorovs12\\LosReg\\LosRegServiceProvider"
+            ]
+        }
     }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Vfjodorovs12\\LosReg\\LosRegServiceProvider"
-      ]
-    }
-  },
-  "require": {
-    "php": "^8.0",
-    "laravel/framework": "^10.0",
-    "eveseat/web": "^5.0"
-  }
 }
