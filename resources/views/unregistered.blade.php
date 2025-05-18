@@ -1,7 +1,6 @@
 @extends('web::layouts.app')
 
 @section('page_title', 'Unregistered Characters')
-
 @section('page_header', 'Unregistered Characters')
 
 @section('content')
