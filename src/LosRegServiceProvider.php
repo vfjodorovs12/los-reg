@@ -12,10 +12,7 @@ class LosRegServiceProvider extends AbstractSeatPlugin
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'losreg');
     }
 
-    public function register()
-    {
-        //
-    }
+    public function register() {}
 
     public function getName(): string
     {
