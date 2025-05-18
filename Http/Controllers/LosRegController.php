@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\LosReg\Http\Controllers;
+namespace Vfjodorovs12\LosReg\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,25 +11,25 @@ class LosRegController extends Controller
 {
     public function showUnregistered(Request $request)
     {
-        // Fetch corporation members from EVE Online API
+        // Получаем список членов корпорации через ESI
         $corporationMembers = $this->fetchCorporationMembers();
 
-        // Fetch registered users from SEAT
+        // Получаем зарегистрированных пользователей SEAT
         $registeredUsers = $this->fetchRegisteredUsers();
 
-        // Compare the lists
+        // Вычисляем незарегистрированных пользователей
         $unregisteredMembers = array_diff($corporationMembers, $registeredUsers);
 
-        // Return a view with the unregistered members
-        return view('LosReg::unregistered', compact('unregisteredMembers'));
+        // Возвращаем view (только маленькие буквы!)
+        return view('losreg::unregistered', compact('unregisteredMembers'));
     }
 
     private function fetchCorporationMembers()
     {
         $client = new Client();
 
-        $corporationId = '123456789'; // Replace with your EVE Online Corporation ID
-        $esiToken = env('EVE_ESI_TOKEN'); // Replace with your ESI token
+        $corporationId = env('EVE_CORPORATION_ID', '123456789'); // Укажи свой ID
+        $esiToken = env('EVE_ESI_TOKEN');
 
         $url = "https://esi.evetech.net/latest/corporations/{$corporationId}/members/";
 
@@ -37,10 +37,9 @@ class LosRegController extends Controller
             $response = $client->get($url, [
                 'headers' => [
                     'Authorization' => "Bearer {$esiToken}",
-                    'User-Agent' => 'LosRegModule/1.0 (contact@example.com)' // Add contact email here
+                    'User-Agent' => 'LosRegModule/1.0 (contact@example.com)'
                 ],
             ]);
-
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
             \Log::error("Error fetching corporation members: " . $e->getMessage());
@@ -50,6 +49,7 @@ class LosRegController extends Controller
 
     private function fetchRegisteredUsers()
     {
+        // Проверь, как называется поле с именем персонажа в твоей версии SEAT
         return User::all()->pluck('name')->toArray();
     }
 }
