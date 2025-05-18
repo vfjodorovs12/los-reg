@@ -10,7 +10,7 @@
             <h3>Пользователи без регистрации</h3>
         </div>
         <div class="card-body">
-            @if (count($unregisteredMembers) > 0)
+            @if (isset($unregisteredMembers) && count($unregisteredMembers) > 0)
                 <ul>
                     @foreach ($unregisteredMembers as $member)
                         <li>{{ $member }}</li>
