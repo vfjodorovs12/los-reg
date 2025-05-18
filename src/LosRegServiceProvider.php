@@ -28,10 +28,13 @@ class LosRegServiceProvider extends AbstractSeatPlugin
 
     public function getMenu(): array
     {
+        // ВАЖНО: массив массивов!
         return [
-            'name' => 'Лос Рег',
-            'icon' => 'fa fa-magic',
-            'route' => 'los-reg.index',
+            [
+                'name' => 'Лос Рег',
+                'icon' => 'fa fa-magic',
+                'route' => 'los-reg.index',
+            ],
         ];
     }
 
