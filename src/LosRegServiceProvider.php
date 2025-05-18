@@ -27,10 +27,15 @@ class LosRegServiceProvider extends AbstractSeatPlugin
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'losreg');
     }
 
-    // ОБЯЗАТЕЛЬНЫЕ методы для SEAT
+    // ОБЯЗАТЕЛЬНЫЕ методы для SEAT! ----
     public function getName(): string
     {
         return 'los-reg';
+    }
+
+    public function getPackagistVendorName(): string
+    {
+        return 'vfjodorovs12';
     }
 
     public function getPackagistPackageName(): string
@@ -42,5 +47,4 @@ class LosRegServiceProvider extends AbstractSeatPlugin
     {
         return 'https://github.com/vfjodorovs12/los-reg';
     }
-    // !!! НЕ реализуй getVersion() !!!
 }
