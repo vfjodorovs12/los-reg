@@ -8,7 +8,7 @@ class LosRegController extends Controller
 {
     public function showUnregistered()
     {
-        // Вернет шаблон resources/views/unregistered.blade.php
+        // НЕ вызывать никаких view() вне методов контроллера!
         return view('losreg::unregistered');
     }
 }
