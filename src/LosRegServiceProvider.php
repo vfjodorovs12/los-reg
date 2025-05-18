@@ -6,18 +6,33 @@ use Seat\Services\AbstractSeatPlugin;
 
 class LosRegServiceProvider extends AbstractSeatPlugin
 {
-    public function getMenu()
+    public function getName(): string
+    {
+        return 'Лос Рег';
+    }
+
+    public function getPackageRepositoryUrl(): string
+    {
+        return 'https://github.com/vfjodorovs12/los-reg';
+    }
+
+    public function getPackagistPackageName(): string
+    {
+        return 'vfjodorovs12/los-reg';
+    }
+
+    public function getMenu(): array
     {
         return [
             'name' => 'Лос Рег',
             'icon' => 'fa fa-magic',
-            'route' => 'los-reg.index', // Имя роутера из routes/web.php
+            'route' => 'los-reg.index',
         ];
     }
 
     public function register()
     {
-        // Можно регистрировать сервисы, если нужно
+        //
     }
 
     public function boot()
