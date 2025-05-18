@@ -12,10 +12,28 @@ class LosRegServiceProvider extends AbstractSeatPlugin
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'losreg');
     }
 
-    public function register() {}
+    public function register()
+    {
+        //
+    }
 
     public function getName(): string
     {
         return 'los-reg';
+    }
+
+    public function getPackageRepositoryUrl(): string
+    {
+        return 'https://github.com/vfjodorovs12/los-reg';
+    }
+
+    public function getPackagistPackageName(): string
+    {
+        return 'los-reg';
+    }
+
+    public function getPackagistVendorName(): string
+    {
+        return 'vfjodorovs12';
     }
 }
