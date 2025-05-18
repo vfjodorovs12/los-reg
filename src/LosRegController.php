@@ -1,14 +1,13 @@
 <?php
 
-namespace Vfjodorovs12\LosReg;
+namespace Vfjodorovs12\LosReg\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 
 class LosRegController extends Controller
 {
-    public function showUnregistered()
+    public function index()
     {
-        // НЕ вызывать никаких view() вне методов контроллера!
-        return view('losreg::unregistered');
+        return view('los-reg::index');
     }
 }
