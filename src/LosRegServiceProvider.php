@@ -2,24 +2,28 @@
 
 namespace Vfjodorovs12\LosReg;
 
-use Illuminate\Support\ServiceProvider;
+use Seat\Services\AbstractSeatPlugin;
 
-class LosRegServiceProvider extends ServiceProvider
+class LosRegServiceProvider extends AbstractSeatPlugin
 {
-    /**
-     * Выполняется после регистрации всех сервис-провайдеров.
-     */
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->add_routes();
+        $this->add_views();
+    }
+
+    private function add_routes()
+    {
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php'); // или '/Http/routes.php' если твои в Http
+    }
+
+    private function add_views()
+    {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'losreg');
     }
 
-    /**
-     * Регистрация сервисов и биндингов.
-     */
     public function register()
     {
-        //
+        // если нужны биндинги/мердж конфига — сюда
     }
 }
