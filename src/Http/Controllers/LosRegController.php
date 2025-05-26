@@ -13,7 +13,7 @@ class LosRegController extends Controller
     {
         $corporationId = 1599371034;
 
-        // Альт-маппинг: character_id альта => character_id майна
+        // Альт-маппинг: character_id альте => character_id майна
         $alts_map = [
             2113730684 => 91340839, // Kite Jonsi => Clive Scott
             // Добавляй дальше
@@ -70,5 +70,12 @@ class LosRegController extends Controller
         return view('los-reg::unregistered', [
             'members' => $filled,
         ]);
+    }
+
+    // Добавленный метод index для устранения ошибки маршрута
+    public function index()
+    {
+        // Можно сразу вызывать логику вывода списка незарегистрированных
+        return $this->unregistered();
     }
 }
