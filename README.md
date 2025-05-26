@@ -1,4 +1,4 @@
-##the module needs to be improved!
+## the module needs to be improved!
 
 # LosReg Module for SEAT
 
@@ -51,11 +51,8 @@ modules/
     ```bash
     composer dump-autoload
     ```
-4. Add your ESI token to the `.env` file:
-    ```env
-    EVE_ESI_TOKEN=Your_ESI_Token
-    ```
-5. Access the module via the route:
+    
+4. Access the module via the route:
     ```
     /los-reg/unregistered
     ```
