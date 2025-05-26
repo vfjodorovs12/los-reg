@@ -3,6 +3,10 @@
 @section('content')
 <h1>Состав корпорации</h1>
 
+@if(isset($log))
+  <pre style="color:red">{{ $log }}</pre>
+@endif
+
 <div class="mb-3">
     <input type="text" id="filter" placeholder="Фильтр по всем колонкам..." onkeyup="filterTable()" class="form-control" />
 </div>
@@ -11,18 +15,18 @@
     <thead>
         <tr>
             <th onclick="sortTable(0)">Character ID ▲▼</th>
-            <th onclick="sortTable(1)">Name ▲▼</th>
+            <th onclick="sortTable(1)">Член корпорации ▲▼</th>
             <th onclick="sortTable(2)">Дата вступления ▲▼</th>
             <th onclick="sortTable(3)">Дата последнего посещения ▲▼</th>
             <th onclick="sortTable(4)">Status ▲▼</th>
-            <th onclick="sortTable(5)">Члены Корпорации ▲▼</th>
+            <th onclick="sortTable(5)">Пользователь SEAT ▲▼</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($members as $member)
             <tr>
                 <td>{{ $member->character_id }}</td>
-                <td>{{ $member->seat_name }}</td>
+                <td>{{ $member->corp_name }}</td>
                 <td>{{ $member->start_date_fmt }}</td>
                 <td>{{ $member->logoff_date_fmt }}</td>
                 <td>
@@ -32,7 +36,7 @@
                         <span class="text-secondary">Offline</span>
                     @endif
                 </td>
-                <td>{{ $member->corp_name }}</td>
+                <td>{{ $member->seat_name }}</td>
             </tr>
         @endforeach
     </tbody>
@@ -66,8 +70,6 @@ function sortTable(n) {
     rows.sort(function(a, b) {
         var x = a.cells[n].textContent.trim();
         var y = b.cells[n].textContent.trim();
-
-        // Пытаемся умно сортировать числа и даты
         if (!isNaN(Date.parse(x)) && !isNaN(Date.parse(y))) {
             return (new Date(x) - new Date(y)) * (asc ? 1 : -1);
         } else if (!isNaN(x) && !isNaN(y)) {
