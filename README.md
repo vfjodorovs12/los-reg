@@ -1,3 +1,5 @@
+##the module needs to be improved!
+
 # LosReg Module for SEAT
 
 The `LosReg` module is an extension for SEAT that allows administrators to view members of the EVE Online corporation **SovNarKom** who have not yet registered in SEAT. It fetches corporation member data from the EVE Online ESI API and compares it with registered SEAT users to display any discrepancies.
