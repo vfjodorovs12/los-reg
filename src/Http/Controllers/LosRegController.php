@@ -10,17 +10,14 @@ class LosRegController extends Controller
 {
     public function index()
     {
-        // Можно оставить пустым или сделать редирект на unregistered
         return redirect()->route('los-reg.unregistered');
     }
 
     public function unregistered()
     {
-        // --- 1. Получить всех членов корпорации через ESI (или SEAT API)
         $esiToken = env('EVE_ESI_TOKEN');
-        $corporationId = 1599371034; // <-- твой corporation_id SovNarKom
+        $corporationId = 1599371034;
 
-        // Используем ESI для примера, как в README
         $client = new Client([
             'base_uri' => 'https://esi.evetech.net/latest/',
             'timeout'  => 10.0,
@@ -35,17 +32,16 @@ class LosRegController extends Controller
             ]);
             $allMemberIds = json_decode($response->getBody(), true);
         } catch (\Exception $e) {
-            return view('unregistered', [
+            return view('los-reg::unregistered', [
                 'members' => [],
                 'error' => 'Ошибка получения списка членов корпорации: ' . $e->getMessage()
             ]);
         }
 
-        // --- 2. Получить имена персонажей через ESI bulk lookup
         $allMembers = [];
         if (!empty($allMemberIds)) {
             try {
-                $chunks = array_chunk($allMemberIds, 1000); // ESI ограничение
+                $chunks = array_chunk($allMemberIds, 1000);
                 foreach ($chunks as $chunk) {
                     $res = $client->post('characters/names/', [
                         'json' => $chunk,
@@ -62,18 +58,15 @@ class LosRegController extends Controller
                     }
                 }
             } catch (\Exception $e) {
-                return view('unregistered', [
+                return view('los-reg::unregistered', [
                     'members' => [],
                     'error' => 'Ошибка получения имён персонажей: ' . $e->getMessage()
                 ]);
             }
         }
 
-        // --- 3. Получить зарегистрированных персонажей из SEAT
-        // Таблица seat: users_characters, поле character_id
         $registeredIds = DB::table('users_characters')->pluck('character_id')->toArray();
 
-        // --- 4. Оставить только незарегистрированных
         $unregistered = [];
         foreach ($allMembers as $member) {
             if (!in_array($member['character_id'], $registeredIds)) {
@@ -81,8 +74,7 @@ class LosRegController extends Controller
             }
         }
 
-        // --- 5. Передать в шаблон
-        return view('unregistered', [
+        return view('los-reg::unregistered', [
             'members' => $unregistered,
             'error' => null
         ]);
