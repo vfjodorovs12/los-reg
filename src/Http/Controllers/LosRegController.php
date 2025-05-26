@@ -3,8 +3,8 @@
 namespace Vfjodorovs12\LosReg\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Seat\Eveapi\Models\Corporation\CorporationMember;
 use Illuminate\Support\Facades\DB;
-use GuzzleHttp\Client;
 
 class LosRegController extends Controller
 {
@@ -15,64 +15,18 @@ class LosRegController extends Controller
 
     public function unregistered()
     {
-        $esiToken = env('EVE_ESI_TOKEN');
-        $corporationId = 1599371034;
+        $corporationId = 1599371034; // SovNarKom corp ID — замени на свой если нужно
 
-        $client = new Client([
-            'base_uri' => 'https://esi.evetech.net/latest/',
-            'timeout'  => 10.0,
-        ]);
+        // Получаем всех членов корпорации через SEAT API
+        $members = CorporationMember::where('corporation_id', $corporationId)->get();
 
-        try {
-            $response = $client->get("corporations/{$corporationId}/members/", [
-                'headers' => [
-                    'Authorization' => "Bearer $esiToken",
-                    'Accept'        => 'application/json',
-                ]
-            ]);
-            $allMemberIds = json_decode($response->getBody(), true);
-        } catch (\Exception $e) {
-            return view('los-reg::unregistered', [
-                'members' => [],
-                'error' => 'Ошибка получения списка членов корпорации: ' . $e->getMessage()
-            ]);
-        }
+        // Получаем зарегистрированных персонажей
+        $registered_ids = DB::table('users_characters')->pluck('character_id')->toArray();
 
-        $allMembers = [];
-        if (!empty($allMemberIds)) {
-            try {
-                $chunks = array_chunk($allMemberIds, 1000);
-                foreach ($chunks as $chunk) {
-                    $res = $client->post('characters/names/', [
-                        'json' => $chunk,
-                        'headers' => [
-                            'Accept' => 'application/json',
-                        ],
-                    ]);
-                    $names = json_decode($res->getBody(), true);
-                    foreach ($names as $char) {
-                        $allMembers[$char['character_id']] = [
-                            'character_id' => $char['character_id'],
-                            'name' => $char['character_name'],
-                        ];
-                    }
-                }
-            } catch (\Exception $e) {
-                return view('los-reg::unregistered', [
-                    'members' => [],
-                    'error' => 'Ошибка получения имён персонажей: ' . $e->getMessage()
-                ]);
-            }
-        }
-
-        $registeredIds = DB::table('users_characters')->pluck('character_id')->toArray();
-
-        $unregistered = [];
-        foreach ($allMembers as $member) {
-            if (!in_array($member['character_id'], $registeredIds)) {
-                $unregistered[] = $member;
-            }
-        }
+        // Оставляем только незарегистрированных
+        $unregistered = $members->filter(function($member) use ($registered_ids) {
+            return !in_array($member->character_id, $registered_ids);
+        });
 
         return view('los-reg::unregistered', [
             'members' => $unregistered,
