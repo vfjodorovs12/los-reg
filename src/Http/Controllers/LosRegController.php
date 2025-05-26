@@ -22,9 +22,11 @@ class LosRegController extends Controller
         }
 
         foreach ($members as $member) {
+            // Имя пользователя SEAT (если есть)
             $member->seat_name = $seat_names[$member->character_id] ?? '—';
-            // Имя из корпорации (EVE API, должно быть всегда!)
-            $member->corp_name = $member->name ?? '!!!БАГ_ИМЯ!!!';
+            // Имя персонажа (EVE API через SEAT)
+            // ВАЖНО: если имя не найдено, выводим character_id (без !!!БАГ_ИМЯ!!!)
+            $member->corp_name = $member->name ?: $member->character_id;
 
             $member->start_date_fmt = $member->start_date
                 ? \Carbon\Carbon::parse($member->start_date)->format('Y-m-d')
@@ -39,8 +41,12 @@ class LosRegController extends Controller
                 : 'Offline';
         }
 
+        // Временный лог для проверки что работает именно этот контроллер!
+        $log = 'DEBUG LOG: Members loaded: ' . $members->count() . ' at ' . now();
+
         return view('los-reg::unregistered', [
             'members' => $members,
+            'log' => $log,
         ]);
     }
 }
