@@ -7,7 +7,9 @@
     <div class="panel panel-default">
         <div class="panel-heading">Незарегистрированные члены корпорации</div>
         <div class="panel-body">
-            @if(empty($members))
+            @if($error)
+                <div style="color:red;">{{ $error }}</div>
+            @elseif(empty($members))
                 <p>Все члены корпорации зарегистрированы!</p>
             @else
                 <table class="table table-striped">
