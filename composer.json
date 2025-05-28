@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Vfjodorovs12\\LosReg\\": ""
+            "Vfjodorovs12\\LosReg\\": "src/"
         }
     },
     "extra": {
